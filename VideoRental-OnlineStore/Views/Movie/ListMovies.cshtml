@@ -1,0 +1,93 @@
+﻿@model List<MovieViewModel>
+@{
+    ViewData["Title"] = "Movie List";
+    string userFullName = ViewData["UserFullName"] as string;
+    string userId = ViewData["UserId"] as string;
+}
+@* 
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h1>Welcome, @userFullName!</h1>
+            <p>Here is a list of available movies:</p>
+            <hr />
+            <div class="row">
+                @foreach (var movie in Model)
+                {
+                    <div class="col-md-3 mb-4">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">@movie.Title</h5>
+                                <p class="card-text"><strong>Genre:</strong> @movie.Genre</p>
+                                <p class="card-text">
+                                    <strong>Availability:</strong>
+                                    <span class="@(movie.Quantity > 0 ? "text-success" : "text-danger")">
+                                        @(movie.Quantity > 0 ? "Available" : "Not Available")
+                                    </span>
+                                </p>
+
+                                <div class="d-flex justify-content-between">
+                                    <a href="@Url.Action("Details", "Movie", new { id = movie.Id })" class="btn btn-outline-dark">Details</a>
+                                    @if (movie.Quantity > 0)
+                                    {
+                                        <a href="@Url.Action("RentMovie", "Rent", new { id = movie.Id})" class="btn btn-outline-success">Rent</a>
+                                    }
+                                    else
+                                    {
+                                        <button class="btn btn-secondary" disabled>Rent</button>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div> *@
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h1>Welcome, @userFullName!</h1>
+            <p>Here is a list of available movies:</p>
+            <hr />
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Genre</th>
+                        <th>Availability</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var movie in Model)
+                    {
+                        <tr>
+                            <td>@movie.Title</td>
+                            <td>@movie.Genre</td>
+                            <td>
+                                <span class="@(movie.Quantity > 0 ? "text-success" : "text-danger")">
+                                    @(movie.Quantity > 0 ? "Available" : "Not Available")
+                                </span>
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Details", "Movie", new { id = movie.Id })" class="btn btn-outline-dark btn-sm">Details</a>
+                                @if (movie.Quantity > 0)
+                                {
+                                    <a href="@Url.Action("RentMovie", "Rent", new { id = movie.Id })" class="btn btn-outline-success btn-sm">Rent</a>
+                                }
+                                else
+                                {
+                                    <button class="btn btn-secondary btn-sm" disabled>Rent</button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

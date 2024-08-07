@@ -1,0 +1,48 @@
+﻿@model List<RentalViewModel>
+
+<div class="container">
+    <h2>Rented Movies</h2>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Movie Title</th>
+                <th>Genre</th>
+                <th>Rented On</th>
+                <th>Returned On</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var rental in Model)
+            {
+                <tr>
+                    <td>@rental.MovieViewModel.Title</td>
+                    <td>@rental.MovieViewModel.Genre.ToString()</td>
+                    <td>@rental.RentedOn.ToString("yyyy-MM-dd")</td>
+                    <td>
+                        @if (rental.ReturnedOn.HasValue)
+                        {
+                            <span class="text-success">@rental.ReturnedOn.Value.ToString("yyyy-MM-dd")</span>
+                        }
+                        else
+                        {
+                            <span class="text-danger">Not Returned</span>
+                        }
+                    </td>
+                    <td>
+                        @if (!rental.ReturnedOn.HasValue)
+                        {
+                            <form asp-action="ReturnMovie" asp-controller="Rent" method="post">
+                                <input type="hidden" name="rentalId" value="@rental.Id" />
+                                <input type="hidden" name="userId" value="@rental.UserId" />
+                                <input type="hidden" name="movieId" value="@rental.MovieId" />
+
+                                <button type="submit" class="btn btn-danger">Return</button>
+                            </form>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

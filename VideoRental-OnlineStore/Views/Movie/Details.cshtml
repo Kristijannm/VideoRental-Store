@@ -1,0 +1,117 @@
+﻿@model MovieViewModel
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+@* 
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h1>@Model.Title</h1>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-3">Genre:</dt>
+                <dd class="col-sm-9">@Model.Genre</dd>
+
+                <dt class="col-sm-3">Language:</dt>
+                <dd class="col-sm-9">@Model.Language</dd>
+
+                <dt class="col-sm-3">Release Date:</dt>
+                <dd class="col-sm-9">@Model.ReleaseDate.ToString("MMMM dd, yyyy")</dd>
+
+                <dt class="col-sm-3">Length:</dt>
+                <dd class="col-sm-9">@Model.Length.ToString(@"hh\:mm\:ss")</dd>
+
+                <dt class="col-sm-3">Age Restriction:</dt>
+                <dd class="col-sm-9">@Model.AgeRestriction</dd>
+
+                <dt class="col-sm-3">Available Quantity:</dt>
+                <dd class="col-sm-9">@Model.Quantity</dd>
+
+                <dt class="col-sm-3">Available for Rent:</dt>
+                <dd class="col-sm-9">@((Model.IsAvailable) ? "Yes" : "No")</dd>
+            </dl>
+
+            <a href="@Url.Action("ListMovies", "Movie")" class="btn btn-primary">Back to List</a>
+
+            @if (Model.IsAvailable)
+            {
+                <a href="@Url.Action("RentMovie", "Rent", new { id = Model.Id,userId = ViewData["UserId"]})" class="btn btn-success">Rent</a>
+            }
+        </div>
+    </div>
+</div>
+ *@
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h1>@Model.Title</h1>
+            <hr />
+
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th scope="row">Genre</th>
+                        <td>@Model.Genre</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Language</th>
+                        <td>@Model.Language</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Release Date</th>
+                        <td>@Model.ReleaseDate.ToString("MMMM dd, yyyy")</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Length</th>
+                        <td>@Model.Length.ToString(@"hh\:mm\:ss")</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Age Restriction</th>
+                        <td>@Model.AgeRestriction</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Available Quantity</th>
+                        <td>@Model.Quantity</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Available for Rent</th>
+                        <td>@((Model.IsAvailable) ? "Yes" : "No")</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="mt-3">
+                <a href="@Url.Action("ListMovies", "Movie")" class="btn btn-primary">Back to List</a>
+
+                @if (Model.IsAvailable)
+                {
+                    <a href="@Url.Action("RentMovie", "Rent", new { id = Model.Id, userId = ViewData["UserId"] })" class="btn btn-success">Rent</a>
+                }
+            </div>
+            @if (Model.Casts != null)
+            {
+                <h3 class="mt-4">Casts</h3>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Part</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var cast in Model.Casts)
+                        {
+                            <tr>
+                                <td>@cast.Name</td>
+                                <td>@cast.Part</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+   
+</div>
