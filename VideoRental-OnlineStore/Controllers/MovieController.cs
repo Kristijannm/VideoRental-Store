@@ -9,8 +9,8 @@ namespace VideoRental_OnlineStore.Controllers
 {
     public class MovieController : Controller
     {
-        private IMovieService _movieService ;
-         public MovieController(IMovieService movieService)
+        private IMovieService _movieService;
+        public MovieController(IMovieService movieService)
         {
             _movieService = movieService;
         }
@@ -22,7 +22,7 @@ namespace VideoRental_OnlineStore.Controllers
 
             var movies = _movieService.GetAllMovies();
 
-            
+
             ViewData["UserFullName"] = userFullName;
             ViewData["UserId"] = userId;
             return View(movies);
@@ -35,15 +35,15 @@ namespace VideoRental_OnlineStore.Controllers
                 var movie = _movieService.GetMovieById(id);
                 return View(movie);
             }
-            catch(MovieNotFoundException ex)
+            catch (MovieNotFoundException ex)
             {
-                return RedirectToAction("ErrorMessage", new CustomErrorViewModel{Message =  ex.Message });
+                return RedirectToAction("ErrorMessage", new CustomErrorViewModel { Message = ex.Message });
             }
             catch (Exception ex)
             {
                 return RedirectToAction("Error", "Home", new { message = ex.Message });
             }
-            
+
 
         }
         public IActionResult ErrorMessage(CustomErrorViewModel customError)

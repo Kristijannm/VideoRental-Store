@@ -22,7 +22,6 @@ namespace VideoRental_OnlineStore.Controllers
         }
 
         [HttpPost]
-
         public IActionResult Login(UserLoginViewModel model)
         {
             if (ModelState.IsValid)

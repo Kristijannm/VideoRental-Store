@@ -9,7 +9,7 @@ namespace VideoRental_OnlineStore.Controllers
     {
         private IRentalService _rentalService;
         private IMovieService _movieService;
-        public RentController(IRentalService rentalService,IMovieService movieService)
+        public RentController(IRentalService rentalService, IMovieService movieService)
         {
             _rentalService = rentalService;
             _movieService = movieService;
@@ -19,13 +19,13 @@ namespace VideoRental_OnlineStore.Controllers
         {
             int? userId = HttpContext.Session.GetInt32("UserId"); //user currently logged in
             int rentalId = _rentalService.CreateRental(userId.Value, Id);
-            if(rentalId != null)
+            if (rentalId != null)
             {
                 _movieService.DecreaseMovieQuantity(Id);
-                return RedirectToAction("UserRentals",new {userId = userId.Value});
+                return RedirectToAction("UserRentals", new { userId = userId.Value });
             }
-            return RedirectToAction("ErrorMessage",new CustomErrorViewModel { Message = "Something went wrong while truing to proceed your action."});
-            
+            return RedirectToAction("ErrorMessage", new CustomErrorViewModel { Message = "Something went wrong while truing to proceed your action." });
+
         }
 
         public IActionResult UserRentals(int userId)
@@ -36,16 +36,16 @@ namespace VideoRental_OnlineStore.Controllers
             return View(userRentals);
         }
 
-        public IActionResult ReturnMovie(int rentalId,int userId, int movieId)
+        public IActionResult ReturnMovie(int rentalId, int userId, int movieId)
         {
-            
+
             RentalViewModel rental = _rentalService.GetRentalById(rentalId);
-            if(rental != null && rental.MovieId == movieId && rental.UserId == userId)
+            if (rental != null && rental.MovieId == movieId && rental.UserId == userId)
             {
                 bool succeed = _rentalService.ReturnMovie(rentalId, userId, movieId);
-                if(succeed)
+                if (succeed)
                     _movieService.IncreaseMovieQuantity(movieId);
-                return RedirectToAction("UserRentals",new { userId = userId });
+                return RedirectToAction("UserRentals", new { userId = userId });
             }
             return View("Error");
 
